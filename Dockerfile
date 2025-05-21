@@ -1,9 +1,8 @@
-FROM alpine:latest
+FROM debian:stable-slim
 
-RUN apk add --no-cache curl bash
+RUN apt-get update && apt-get install -y curl
 
-# Download amd64 binary of nextdns and make it executable
-RUN curl -L -o /usr/bin/nextdns https://github.com/nextdns/nextdns/releases/latest/download/nextdns-linux-amd64 \
-    && chmod +x /usr/bin/nextdns
+# Download NextDNS amd64 binary for Linux
+RUN curl -L -o /usr/bin/nextdns https://github.com/nextdns/nextdns/releases/latest/download/nextdns-linux-amd64 && chmod +x /usr/bin/nextdns
 
 ENTRYPOINT ["nextdns", "run", "-config", "9124cc"]
